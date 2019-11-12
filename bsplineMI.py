@@ -1,5 +1,16 @@
 import numpy as np
 
+def knotVector(nbins, degree):
+    knotVector = []
+    for i in range(1,nbins+1):
+        if i < degree:
+            knotVector.append(0)
+        elif  i>=degree and i<=nbins-1:
+            knotVector.append(i-degree+1)
+        elif i>nbins-1:
+            knotVector.append(nbins-1-degree+2)
+    return knotVector
+
 def bsplineBasis(i, p, U, u):
     '''Cox de Boor recursion to find b-spline basis function.
     i: knots ID
