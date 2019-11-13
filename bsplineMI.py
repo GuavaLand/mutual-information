@@ -71,7 +71,7 @@ def MI(probTable1, probTable2):
     Samples as rows and bins as columns.'''
     return entropy(probTable1) + entropy(probTable2) - entropy(np.dot(probTable1.T,probTable2),dim=2)
 
-def wrapper(X,Y, nbins, order=3):
+def MIwrapper(X,Y, nbins=10, order=3):
     '''Wrapper function to find mutual information of X and Y.
     X, Y are lists/numpy arrays.'''
     zx = x2z(X)
