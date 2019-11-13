@@ -72,7 +72,7 @@ def MI(probTable1, probTable2):
     return entropy(probTable1) + entropy(probTable2) - entropy(np.dot(probTable1.T,probTable2),dim=2)
 
 def MIwrapper(X,Y, nbins=10, order=3):
-    '''Wrapper function to find mutual information of X and Y.
+    '''Find mutual information of X and Y.
     X, Y are lists/numpy arrays.'''
     zx = x2z(X)
     zy = x2z(Y)
