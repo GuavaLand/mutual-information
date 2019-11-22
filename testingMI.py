@@ -1,13 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import bsplineMI
+import simpleBinningMI
 
-def plotDistnCalcMI(dist1,dist2):
+def plotDistnCalcMI(dist1,dist2, method='bsplineMI'):
     plt.scatter(dist1,dist2,marker='.')
     plt.title('distribution 1 vs distribution 2')
     plt.axis('equal')
     plt.show()
-    MI = bsplineMI.MIwrapper(dist1,dist2)
+    if method == 'bsplineMI':
+        MI = bsplineMI.MIwrapper(dist1,dist2)
+    else:
+        MI = simpleBinningMI.MI(dist1,dist2)
     print('The mutual information between dist1 and dist2: %f' %MI)
     return MI
 

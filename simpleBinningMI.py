@@ -13,11 +13,11 @@ import numpy as np
 
 
 
-def convert2IndicatorMatrix(variable, minVal, maxVal, bins=20):
+def convert2IndicatorMatrix(variable, minVal, maxVal):
     '''Convert 1D np array variable (k instances) into k-by-bins indicator matrix'''
-    binBoundary = np.linspace(minVal, maxVal+0.001, num=bins+1) # increase max a bit so max won't be in a separate bin
+    binBoundary = np.arange(minVal, maxVal+1) # increase max a bit so max won't be in a separate bin
     pointBinID = np.digitize(variable,binBoundary)
-    binsOrder = np.arange(1,bins+1)
+    binsOrder = np.arange(1,len(binBoundary)+1)
     return (pointBinID[:,np.newaxis] == binsOrder).astype(int)
     
 def entropy(indicator_matrix, dim=1):
@@ -31,11 +31,13 @@ def entropy(indicator_matrix, dim=1):
 
 def MI(X,Y):
     '''Calculate mutual information of variables X and Y.'''
-    minVal = min(min(X),min(Y))
-    maxVal = max(max(X),max(Y))
+    X = np.round(X-np.min(X))
+    Y = np.round(Y-np.min(Y))
+    minVal = min(np.min(X),np.min(Y))
+    maxVal = max(np.max(X),np.max(Y))
     indicator_X = convert2IndicatorMatrix(X, minVal, maxVal)
     indicator_Y = convert2IndicatorMatrix(Y, minVal, maxVal)
-    indicator_XY = np.dot(indicator_X,np.transpose(indicator_Y))
+    indicator_XY = np.dot(indicator_X.T,indicator_Y)
     
     H_X = entropy(indicator_X)
     H_Y = entropy(indicator_Y)
