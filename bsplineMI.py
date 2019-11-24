@@ -3,7 +3,11 @@ import numpy as np
 def x2z(X):
     '''Convert raw data onto z range that can be evaluated by bsplineBasis.
     X is a list/numpy array.'''
-    return (np.array(X)-np.min(X))/(np.max(X)-np.min(X))
+    xmin = np.min(X)
+    xmax = np.max(X)
+    if xmin == xmax:
+        xmax = xmin+1
+    return (np.array(X)-xmin)/(xmax-xmin)
 
 def knotVector(nbins, order):
     '''Internal knots from 1 to nbins-degree, with order preceding and trailing knots.
